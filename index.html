@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Love Journey</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffd1dc, #c8b6ff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      opacity: 0.8;
+      z-index: 0;
+      pointer-events: none;
+      animation-name: fall, sway;
+      animation-duration: 8s, 4s;
+      animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: infinite, infinite;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart:after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    @keyframes sway {
+      0%, 100% {
+        transform: translateX(0) rotate(45deg);
+      }
+      50% {
+        transform: translateX(15px) rotate(45deg);
+      }
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .textbox {
+      background-color: rgba(255, 255, 255, 0.75);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 600px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      color: #660032;
+      user-select: none;
+    }
+
+    .button-group button {
+      margin: 10px;
+      padding: 12px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background-color: #ff6f91;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(255, 111, 145, 0.5);
+    }
+
+    .button-group button:hover {
+      background-color: #ff3b63;
+      transform: scale(1.05);
+    }
+
+    #thinkBtn:hover {
+      transform: translateX(10px);
+    }
+
+    .gallery {
+      width: 320px;
+      height: 320px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotate 20s infinite linear;
+      perspective: 1200px;
+      transform-origin: center center;
+      margin-bottom: 40px;
+    }
+
+    .gallery img {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      transition: transform 0.5s, z-index 0.5s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    .gallery img:nth-child(1)  { transform: rotateY(0deg) translateZ(400px); }
+    .gallery img:nth-child(2)  { transform: rotateY(36deg) translateZ(400px); }
+    .gallery img:nth-child(3)  { transform: rotateY(72deg) translateZ(400px); }
+    .gallery img:nth-child(4)  { transform: rotateY(108deg) translateZ(400px); }
+    .gallery img:nth-child(5)  { transform: rotateY(144deg) translateZ(400px); }
+    .gallery img:nth-child(6)  { transform: rotateY(180deg) translateZ(400px); }
+    .gallery img:nth-child(7)  { transform: rotateY(216deg) translateZ(400px); }
+    .gallery img:nth-child(8)  { transform: rotateY(252deg) translateZ(400px); }
+    .gallery img:nth-child(9)  { transform: rotateY(288deg) translateZ(400px); }
+    .gallery img:nth-child(10) { transform: rotateY(324deg) translateZ(400px); }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    #galleryPage .textbox-input {
+      margin-top: 10px;
+      max-width: 600px;
+      width: 90vw;
+    }
+    #galleryPage textarea {
+      width: 100%;
+      min-height: 100px;
+      border-radius: 5px;
+      border: 2px solid #ff6f91;
+      padding: 12px 16px;
+      font-size: 0.5rem;
+      resize: vertical;
+      box-shadow: 0 5px 15px rgba(255, 111, 145, 0.3);
+      font-family: inherit;
+      color: #660032;
+    }
+
+    @media (max-width: 500px) {
+      .gallery {
+        width: 90vw;
+        height: 90vw;
+        animation-duration: 30s;
+      }
+
+      .gallery img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .textbox {
+        font-size: 1.1rem;
+      }
+
+      .button-group button {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    for (let i = 0; i < 40; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.top = `${Math.random() * -100}vh`;
+      heart.style.animationDelay = `${Math.random() * 8}s, ${Math.random() * 4}s`;
+      heart.style.animationDuration = `${6 + Math.random() * 6}s, ${3 + Math.random() * 3}s`;
+      document.body.appendChild(heart);
+    }
+
+    function showPage(id) {
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "none";
+      document.getElementById("galleryPage").style.display = "none";
+      document.getElementById(id).style.display = "flex";
+    }
+
+    function thinkButton() {
+      alert("Take your time, love. I'm here whenever you're ready 💖");
+    }
+  </script>
+
+  <div id="page1" class="container">
+    <div class="textbox">
+      <h1>💌 I want to ask you something...</h1>
+    </div>
+    <div class="button-group">
+      <button onclick="showPage('page2')">❤️ Yes, go ahead</button>
+      <button onclick="showPage('page2')">💖 Sure, ask me</button>
+    </div>
+  </div>
+
+  <div id="page2" class="container" style="display:none">
+    <div class="textbox">
+      <h1>💍 I want to take our relationship to the next step.<br>Will you marry me?</h1>
+    </div>
+    <div class="button-group">
+      <button onclick="showPage('galleryPage')">😍 Of course, I will!</button>
+      <button id="thinkBtn" onclick="thinkButton()">🤔 Let me think</button>
+    </div>
+  </div>
+
+  <div id="galleryPage" class="container" style="display:none; flex-direction: column;">
+    <div class="textbox">
+      <h1>📸 Our Love Memories</h1>
+    </div>
+    <div class="gallery">
+      <img src="our1.jpg" alt="Memory 1" />
+      <img src="our2.jpg" alt="Memory 2" />
+      <img src="our3.jpg" alt="Memory 3" />
+      <img src="our4.jpg" alt="Memory 4" />
+      <img src="our5.jpg" alt="Memory 5" />
+      <img src="our6.jpg" alt="Memory 6" />
+      <img src="our7.jpg" alt="Memory 7" />
+      <img src="our8.jpg" alt="Memory 8" />
+      <img src="our9.jpg" alt="Memory 9" />
+      <img src="our10.jpg" alt="Memory 10" />
+    </div>
+  </div>
+
+</body>
+</html>
